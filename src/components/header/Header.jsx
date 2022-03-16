@@ -3,12 +3,15 @@ import { getDisplayedMonth } from '../../utils/getDisplayedMonth';
 
 import './header.scss';
 
-const Header = ({ onPrev, onNext, onToday, weekStartDate }) => {
+const Header = ({ onPrev, onNext, onToday, weekStartDate, onOpenModal }) => {
   const dispalyedMonth = getDisplayedMonth(weekStartDate);
   
   return (
     <header className='header'>
-      <button className='button create-event-btn'>
+      <button 
+        className='button create-event-btn'
+        onClick={onOpenModal}
+      >
         <i className='fas fa-plus create-event-btn__icon'></i>Create
       </button>
       <div className='navigation'>

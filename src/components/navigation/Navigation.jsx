@@ -1,10 +1,7 @@
-import React from 'react';
-import { days } from '../../utils/dateUtils.js';
+import React, { useState } from 'react';
 import moment from 'moment';
 
-const Navigation = ({ weekDates }) => {
-  const today = moment(new Date()).format('DD-MMMM-YYYY');
-
+const Navigation = ({ weekDates, today }) => {
   const dayHtml = (date, isToday) => {
     if (isToday) {
       return (

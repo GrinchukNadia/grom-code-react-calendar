@@ -1,34 +1,31 @@
-const linePosition = () => {
-  const timeInMinuts = new Date().getMinutes() + new Date().getHours() * 60;
-  const lineElement = document.querySelector('.line');
-  if (lineElement) {
-    lineElement.style.top = `${+timeInMinuts}px`;
-  }
+import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+
+const countMinutesInDay = () => {
+  const dayHours = moment().get('hours') * 60;
+  const dayMinutes = moment().get('minutes');
+  const minutesTotal = dayHours + dayMinutes;
+  return minutesTotal
+}
+const RedLine = () => {
+  const minutesTotal = countMinutesInDay()
+  const [timeInMinuts, setTimeInMinutes] = useState(minutesTotal);
+  
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const minutesTotal = countMinutesInDay()
+      setTimeInMinutes(minutesTotal);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [timeInMinuts]);
+
+  return (
+    <div style={{ top: timeInMinuts }} className='red-line'>
+      <span className='red-line_dote'></span>
+      <span className='red-line_line'></span>
+    </div>
+  );
 };
 
-export function updateLinePosition() {
-  const now = new Date();
-
-  const timeToNextUpdate =
-    (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
-
-  setTimeout(() => {
-    linePosition();
-  }, timeToNextUpdate);
-}
-
-export function timeIndicator() {
-  const today = new Date().getDate();
-  const todayContainer = document.querySelector(`[data-day="${today}"]`);
-  const line = document.createElement('div');
-  const innerLine = `
-    <span class="line_dote"></span>
-    <span class="line_line"></span>
-  `;
-  line.classList.add('line');
-  line.innerHTML = innerLine;
-  todayContainer.prepend(line);
-
-  linePosition();
-  updateLinePosition();
-}
+export default RedLine;

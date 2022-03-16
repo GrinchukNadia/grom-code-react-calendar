@@ -30,7 +30,6 @@ export const formatMins = (mins) => {
   return mins < 10 ? `0${mins}` : mins;
 };
 
-export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export const months = [
   'January',
   'February',
